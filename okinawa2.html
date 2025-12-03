@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>沖繩冬日旅路 | Okinawa Winter Trip</title>
+    <title>沖繩冬日輕旅 | Okinawa Winter Trip</title>
     
     <!-- 預載資源 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -127,7 +127,7 @@
             flex: 1 1 calc(50% - 6px); /* 50% 寬度減去一半的 gap */
             padding: 8px 20px;
             border: 1px solid var(--text-main);
-            border-radius: 20px;
+            border-radius: 9999px; /* 調整為更橢圓/小藥丸狀 */
             background: transparent;
             font-family: 'Noto Serif JP', serif;
             font-size: 0.95rem;
@@ -236,25 +236,29 @@
             <div class="weather-badge shadow-sm">
                 <span class="text-xs text-gray-500">Fri</span>
                 <span class="text-lg my-1">☁️</span>
-                <span class="text-xs font-bold">20°</span>
+                <!-- 顯示最高溫 / 最低溫 -->
+                <span class="text-xs font-bold">20°<span class="text-gray-400 font-normal"> / 17°</span></span>
                 <span class="text-[10px] text-blue-400">30%</span>
             </div>
             <div class="weather-badge shadow-sm">
                 <span class="text-xs text-gray-500">Sat</span>
                 <span class="text-lg my-1">🌥️</span>
-                <span class="text-xs font-bold">19°</span>
+                <!-- 顯示最高溫 / 最低溫 -->
+                <span class="text-xs font-bold">19°<span class="text-gray-400 font-normal"> / 16°</span></span>
                 <span class="text-[10px] text-blue-400">20%</span>
             </div>
             <div class="weather-badge shadow-sm">
                 <span class="text-xs text-gray-500">Sun</span>
                 <span class="text-lg my-1">🌤️</span>
-                <span class="text-xs font-bold">19°</span>
+                <!-- 顯示最高溫 / 最低溫 -->
+                <span class="text-xs font-bold">19°<span class="text-gray-400 font-normal"> / 16°</span></span>
                 <span class="text-[10px] text-blue-400">10%</span>
             </div>
             <div class="weather-badge shadow-sm" style="border-color: var(--text-main);">
                 <span class="text-xs text-gray-500">Mon</span>
                 <span class="text-lg my-1">🌧️</span>
-                <span class="text-xs font-bold">18°</span>
+                <!-- 顯示最高溫 / 最低溫 -->
+                <span class="text-xs font-bold">18°<span class="text-gray-400 font-normal"> / 15°</span></span>
                 <span class="text-[10px] text-blue-500 font-bold">50%</span>
             </div>
         </div>
