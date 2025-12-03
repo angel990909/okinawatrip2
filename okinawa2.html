@@ -8,7 +8,8 @@
     <!-- 預載資源 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入 Zen Maru Gothic 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,20 +25,25 @@
             --accent-red: #cc4f4f; /* 扶桑花紅 */
             --accent-green: #556b2f; /* 苦瓜綠 */
             --paper-texture: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            --main-font: 'Zen Maru Gothic', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             background-image: var(--paper-texture);
             color: var(--text-main);
-            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-family: var(--main-font);
             line-height: 1.6;
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent; /* 移除點擊高亮 */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        h1, h2, h3, .serif-font {
-            font-family: 'Noto Serif JP', serif;
+        h1, h2, h3, .serif-font, .nav-btn, .tag, .weather-badge {
+            font-family: var(--main-font) !important;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 700;
         }
 
         /* 頂部海浪裝飾 */
@@ -60,18 +66,18 @@
             background-size: 60px 30px;
         }
 
-        /* 卡片樣式 - 手機版優化 Padding */
+        /* 卡片樣式 */
         .trip-card {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 16px; /* 更圓潤 */
+            border-radius: 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
             transition: transform 0.2s ease;
         }
         
         .trip-card:active {
-            transform: scale(0.98); /* 點擊微縮效果 */
+            transform: scale(0.98);
         }
 
         /* 天氣小卡 - 橫向排列優化 */
@@ -80,8 +86,7 @@
             gap: 10px;
             overflow-x: auto;
             padding-bottom: 10px;
-            justify-content: center; /* 置中設定 */
-            /* 隱藏捲軸 */
+            justify-content: center;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
@@ -90,7 +95,7 @@
         }
 
         .weather-badge {
-            flex: 0 0 auto; /* 防止縮小 */
+            flex: 0 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -101,7 +106,7 @@
             min-width: 70px;
         }
 
-        /* 導航 Tabs - 調整為兩行顯示 (Flex Wrap) */
+        /* 導航 Tabs */
         .nav-tabs-container {
             position: sticky;
             top: 0;
@@ -116,24 +121,21 @@
             display: flex;
             gap: 12px;
             padding: 0 16px;
-            /* 移除橫向捲動相關屬性 */
-            flex-wrap: wrap; /* 允許分行 */
-            justify-content: center; /* 置中 */
-            white-space: normal; /* 允許文字換行 */
+            flex-wrap: wrap;
+            justify-content: center;
+            white-space: normal;
         }
         
         .nav-btn {
-            /* 讓按鈕平均分配寬度，每行兩個 */
-            flex: 1 1 calc(50% - 6px); /* 50% 寬度減去一半的 gap */
+            flex: 1 1 calc(50% - 6px);
             padding: 8px 20px;
             border: 1px solid var(--text-main);
-            border-radius: 9999px; /* 調整為更橢圓/小藥丸狀 */
+            border-radius: 9999px;
             background: transparent;
-            font-family: 'Noto Serif JP', serif;
             font-size: 0.95rem;
             color: var(--text-main);
             transition: all 0.3s ease;
-            text-align: center; /* 文字置中 */
+            text-align: center;
         }
         
         .nav-btn.active {
@@ -142,7 +144,7 @@
             box-shadow: 0 4px 10px rgba(74, 74, 74, 0.3);
         }
 
-        /* 導航按鈕樣式 - 加大觸控區 */
+        /* 導航按鈕樣式 */
         .map-btn {
             display: inline-flex;
             align-items: center;
@@ -160,12 +162,12 @@
         /* 時間軸線條 */
         .timeline-container {
             position: relative;
-            padding-left: 10px; /* 減少左側留白 */
+            padding-left: 10px;
         }
         
         .timeline-line {
             position: absolute;
-            left: 24px; /* 對齊圓點中心 */
+            left: 24px;
             top: 10px;
             bottom: 0;
             width: 2px;
@@ -211,12 +213,16 @@
             }
         }
 
-        /* 隱藏/顯示 */
-        .day-content {
-            display: none;
-        }
-        .day-content.active {
+        .day-content { display: none; }
+        .day-content.active { display: block; }
+        
+        /* 營業時間文字樣式 */
+        .biz-hours {
+            font-size: 0.7rem;
+            color: #64748b; /* slate-500 */
             display: block;
+            margin-top: 2px;
+            font-family: 'Zen Maru Gothic', sans-serif;
         }
     </style>
 </head>
@@ -233,38 +239,41 @@
     <!-- 天氣橫向捲動區 -->
     <section class="max-w-3xl mx-auto px-4 -mt-4 relative z-20 mb-6">
         <div class="weather-scroll pb-2">
-            <div class="weather-badge shadow-sm">
+            <!-- Day 1: 12/05 Fri -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
                 <span class="text-xs text-gray-500">Fri</span>
-                <span class="text-lg my-1">🌤️</span>
-                <!-- 顯示最高溫 / 最低溫 -->
-                <span class="text-xs font-bold">22°<span class="text-gray-400 font-normal"> / 17°</span></span>
+                <span class="text-lg my-1 text-orange-300">⛅</span>
+                <span class="text-xs font-bold text-red-500">21°<span class="text-blue-400 font-normal"> / 16°</span></span>
                 <span class="text-[10px] text-blue-400">40%</span>
             </div>
-            <div class="weather-badge shadow-sm">
+            
+            <!-- Day 2: 12/06 Sat -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
                 <span class="text-xs text-gray-500">Sat</span>
-                <span class="text-lg my-1">🌤️</span>
-                <!-- 顯示最高溫 / 最低溫 -->
-                <span class="text-xs font-bold">24°<span class="text-gray-400 font-normal"> / 18°</span></span>
-                <span class="text-[10px] text-blue-400">40%</span>
+                <span class="text-lg my-1 text-orange-400">☀</span>
+                <span class="text-xs font-bold text-red-500">23°<span class="text-blue-400 font-normal"> / 17°</span></span>
+                <span class="text-[10px] text-blue-300">20%</span>
             </div>
-            <div class="weather-badge shadow-sm">
+            
+            <!-- Day 3: 12/07 Sun -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" style="border-color: #60a5fa;" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
                 <span class="text-xs text-gray-500">Sun</span>
-                <span class="text-lg my-1">🌤️</span>
-                <!-- 顯示最高溫 / 最低溫 -->
-                <span class="text-xs font-bold">25°<span class="text-gray-400 font-normal"> / 19°</span></span>
-                <span class="text-[10px] text-blue-400">40%</span>
+                <span class="text-lg my-1 text-blue-400">🌧</span>
+                <span class="text-xs font-bold text-red-500">24°<span class="text-blue-400 font-normal"> / 18°</span></span>
+                <span class="text-[10px] text-blue-600 font-bold">60%</span>
             </div>
-            <div class="weather-badge shadow-sm" style="border-color: var(--text-main);">
+            
+            <!-- Day 4: 12/08 Mon -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
                 <span class="text-xs text-gray-500">Mon</span>
-                <span class="text-lg my-1">🌤️</span>
-                <!-- 顯示最高溫 / 最低溫 -->
-                <span class="text-xs font-bold">24°<span class="text-gray-400 font-normal"> / 20°</span></span>
-                <span class="text-[10px] text-blue-500 font-bold">30%</span>
+                <span class="text-lg my-1 text-orange-300">🌤</span>
+                <span class="text-xs font-bold text-red-500">24°<span class="text-blue-400 font-normal"> / 19°</span></span>
+                <span class="text-[10px] text-blue-400">30%</span>
             </div>
         </div>
     </section>
 
-    <!-- 導航 Tabs (兩行顯示，全螢幕可見) -->
+    <!-- 導航 Tabs -->
     <nav class="nav-tabs-container">
         <div class="max-w-3xl mx-auto nav-tabs" id="navTabs">
             <button class="nav-btn active" onclick="switchDay('day1', this)">Day 1 抵達</button>
@@ -272,7 +281,6 @@
             <button class="nav-btn" onclick="switchDay('day3', this)">Day 3 放鬆</button>
             <button class="nav-btn" onclick="switchDay('day4', this)">Day 4 返程</button>
         </div>
-        <!-- 移除捲動提示陰影 -->
     </nav>
 
     <main class="max-w-3xl mx-auto px-4 pb-24 pt-4">
@@ -304,6 +312,7 @@
                             <div>
                                 <strong class="text-blue-900 block mb-1">🚗 OTS 租車</strong>
                                 <span class="text-xs text-gray-500 block">臨空豐崎營業所</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>08:00 - 19:00</span>
                             </div>
                             <button class="map-btn shadow-sm" onclick="openGoogleMap('OTS+Rinkai+Toyosaki')">
                                 <i class="fas fa-location-arrow mr-1"></i> 導航
@@ -321,6 +330,7 @@
                 <div class="trip-card p-4 flex-1">
                     <span class="tag tag-spot">住宿</span>
                     <h3 class="text-base font-bold mt-1 text-slate-800">Rakuten STAY Naha</h3>
+                    <span class="biz-hours"><i class="far fa-clock mr-1"></i>Check-in: 15:00 / Out: 10:00</span>
                     <div class="flex flex-wrap gap-2 mt-2">
                         <button class="map-btn" onclick="openGoogleMap('Rakuten+STAY+Naha+Yachimundori')">
                             導航飯店
@@ -345,13 +355,24 @@
                     <h3 class="text-base font-bold mt-1 text-slate-800">那霸市區漫步</h3>
                     <ul class="text-sm text-slate-600 mt-3 space-y-3 list-none pl-0">
                         <li class="flex justify-between items-center pb-2 border-b border-gray-100">
-                            <span>沖縄とんかつ食堂</span>
+                            <div class="flex flex-col">
+                                <span>沖縄とんかつ食堂</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>17:00 - 23:00</span>
+                            </div>
                             <button class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600" onclick="openGoogleMap('沖縄とんかつ食堂しまぶた屋+小やじ')">
                                 <i class="fas fa-map-pin"></i> GO
                             </button>
                         </li>
                         <li class="flex justify-between items-center">
-                            <span>Cocokara Fine 藥妝</span>
+                            <div class="flex flex-col">
+                                <div class="flex items-center flex-wrap">
+                                    <span>Cocokara Fine 藥妝</span>
+                                    <span class="text-[10px] text-pink-500 bg-pink-50 border border-pink-200 rounded-full px-2 py-0.5 ml-2 whitespace-nowrap">
+                                        <i class="fas fa-hand-sparkles mr-1"></i>護手霜
+                                    </span>
+                                </div>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>10:00 - 21:00</span>
+                            </div>
                             <button class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600" onclick="openGoogleMap('Cocokara+Fine+Heiwa+Dori')">
                                 <i class="fas fa-map-pin"></i> GO
                             </button>
@@ -374,12 +395,18 @@
                     </div>
                     
                     <div class="mt-3 space-y-3">
-                        <button class="w-full text-left bg-white p-2 rounded shadow-sm border border-gray-100 flex justify-between items-center" onclick="openGoogleMap('Mihama+Chatan+Nakagami+District+Okinawa')">
-                            <span class="text-sm">🎄 美國村聖誕燈飾</span>
+                        <button class="w-full text-left bg-white p-2 rounded shadow-sm border border-gray-100 flex justify-between items-center" onclick="openGoogleMap('美浜アメリカンビレッジ シーサイドP')">
+                            <div>
+                                <span class="text-sm">🎄 美國村聖誕燈飾</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>點燈: 17:00 - 24:00</span>
+                            </div>
                             <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
                         </button>
                         <button class="w-full text-left bg-white p-2 rounded shadow-sm border border-gray-100 flex justify-between items-center" onclick="openGoogleMap('MEGA+Don+Quijote+Ginowan')">
-                            <span class="text-sm">🐧 MEGA 唐吉軻德</span>
+                             <div>
+                                <span class="text-sm">🐧 MEGA 唐吉軻德</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 05:00 (翌日)</span>
+                            </div>
                             <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
                         </button>
                     </div>
@@ -403,7 +430,8 @@
                 <div class="trip-card p-4 flex-1">
                     <span class="tag tag-shop">購物</span>
                     <h3 class="text-base font-bold mt-1">PARCO CITY</h3>
-                    <p class="text-xs text-gray-500 mb-2">浦添西海岸 | 眼前即是海景</p>
+                    <p class="text-xs text-gray-500 mb-1">浦添西海岸 | 眼前即是海景</p>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>10:00 - 22:00</span>
                     <button class="map-btn w-full" onclick="openGoogleMap('San-A+Urasoe+Nishikaigan+PARCO+CITY')">
                         <i class="fas fa-location-arrow mr-1"></i> 導航出發
                     </button>
@@ -419,12 +447,19 @@
                     <span class="tag tag-shop">選物</span>
                     <h3 class="text-base font-bold mt-1">NEOS & Xebio</h3>
                     <p class="text-xs text-gray-500">宜野灣戶外用品天堂</p>
-                    <div class="flex gap-2 mt-3">
-                        <button class="map-btn flex-1 !text-xs" onclick="openGoogleMap('NEOS+Ginowan')">
-                            導航 NEOS
+                    
+                    <div class="flex flex-col gap-2 mt-3">
+                        <button class="map-btn !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('NEOS+Ginowan')">
+                            <span>導航 NEOS</span>
+                            <span class="text-[10px] opacity-80 font-normal mt-0.5">11:00 - 20:00</span>
                         </button>
-                        <button class="map-btn flex-1 !bg-amber-600 !text-xs" onclick="openGoogleMap('Komeda\'s+Coffee+Ginowan+Uchitomari')">
-                            <i class="fas fa-mug-hot mr-1"></i> 客美多
+                        <button class="map-btn !bg-amber-600 !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('Komeda\'s+Coffee+Ginowan+Uchitomari')">
+                            <span class="flex items-center"><i class="fas fa-mug-hot mr-1"></i> 客美多</span>
+                            <span class="text-[10px] opacity-80 font-normal mt-0.5">07:00 - 23:00</span>
+                        </button>
+                        <button class="map-btn !bg-slate-600 !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('Super+Sports+Xebio+Ginowan')">
+                            <span class="flex items-center"><i class="fas fa-shopping-bag mr-1"></i> 導航 Xebio</span>
+                            <span class="text-[10px] opacity-80 font-normal mt-0.5">10:00 - 21:00</span>
                         </button>
                     </div>
                 </div>
@@ -438,14 +473,18 @@
                 <div class="trip-card p-4 flex-1 bg-gradient-to-b from-indigo-50 to-white border border-indigo-100">
                     <span class="tag tag-spot">重點行程</span>
                     <h3 class="text-base font-bold mt-1 text-indigo-900">東南植物園 南國彩燈節</h3>
+                    <span class="biz-hours mb-2 text-indigo-800"><i class="far fa-clock mr-1"></i>17:00 - 22:00 (點燈)</span>
                     <div class="mt-2 mb-3">
                         <button class="map-btn !bg-indigo-600 w-full shadow-md" onclick="openGoogleMap('Southeast+Botanical+Gardens')">
                             <i class="fas fa-star mr-1"></i> 導航入口
                         </button>
                     </div>
-                    <div class="pt-2 border-t border-indigo-100 flex justify-between items-center text-sm">
-                        <span class="text-indigo-800"><i class="fas fa-utensils mr-1"></i> 晚餐：丸源拉麵</span>
-                        <button class="text-xs text-gray-500 underline" onclick="openGoogleMap('Marugen+Ramen+Ginowan')">地圖</button>
+                    <div class="pt-2 border-t border-indigo-100 flex flex-col gap-1 text-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="text-indigo-800"><i class="fas fa-utensils mr-1"></i> 晚餐：丸源拉麵 (浦添店)</span>
+                            <button class="text-xs text-gray-500 underline" onclick="openGoogleMap('丸源ラーメン 浦添店')">地圖</button>
+                        </div>
+                        <span class="biz-hours pl-5"><i class="far fa-clock mr-1"></i>11:00 - 24:00</span>
                     </div>
                 </div>
             </div>
@@ -474,6 +513,7 @@
                 <div class="trip-card p-4 flex-1">
                     <span class="tag tag-spot">必訪</span>
                     <h3 class="text-base font-bold mt-1">DMM Kariyushi 水族館</h3>
+                    <span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 20:00</span>
                     <button class="map-btn mt-2" onclick="openGoogleMap('DMM+Kariyushi+Aquarium')">
                         <i class="fas fa-fish mr-1"></i> 開始導航
                     </button>
@@ -488,6 +528,7 @@
                 <div class="trip-card p-4 flex-1">
                     <span class="tag tag-spot">放鬆</span>
                     <h3 class="text-base font-bold mt-1">瀨長島 Umikaji Terrace</h3>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>10:00 - 21:00</span>
                     <button class="map-btn mb-3" onclick="openGoogleMap('Umikaji+Terrace')">
                         <i class="fas fa-location-arrow mr-1"></i> 導航主區域
                     </button>
@@ -495,17 +536,24 @@
                     <div class="space-y-2 text-sm">
                         <!-- 食物清單 -->
                         <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100">
-                            <span class="font-medium">🥞 幸福鬆餅</span>
+                            <div>
+                                <span class="font-medium">🥞 幸福鬆餅</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>10:00 - 20:00</span>
+                            </div>
                             <button class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded" onclick="openGoogleMap('Shiawase+no+Pancake+Umikaji+Terrace')">Go</button>
                         </div>
                         <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100">
-                            <span class="font-medium">🍚 Poke Boo</span>
+                            <div>
+                                <span class="font-medium">🍚 Poke Boo</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>11:00 - 21:00</span>
+                            </div>
                             <button class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded" onclick="openGoogleMap('Poke+Boo+Umikaji+Terrace')">Go</button>
                         </div>
                         <div class="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-100">
                             <div class="flex flex-col">
                                 <span class="font-medium text-blue-900">♨️ 龍神之湯</span>
-                                <span class="text-[10px] text-blue-500">記得帶髮夾!</span>
+                                <span class="biz-hours text-blue-800"><i class="far fa-clock mr-1"></i>06:00 - 24:00</span>
+                                <span class="text-[10px] text-blue-500 mt-1">記得帶髮夾!</span>
                             </div>
                             <button class="text-xs bg-blue-600 text-white px-3 py-1 rounded-full" onclick="openGoogleMap('Ryukyu+Onsen+Senagajima+Hotel')">Go</button>
                         </div>
@@ -521,7 +569,8 @@
                 <div class="trip-card p-4 flex-1 border-t-4 border-slate-700">
                     <span class="tag tag-food">預約制</span>
                     <h3 class="text-base font-bold mt-1">燒肉 KAZUCHAN</h3>
-                    <p class="text-xs text-gray-500 mb-2">那霸國際通店</p>
+                    <p class="text-xs text-gray-500 mb-1">那霸國際通店</p>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>16:00 - 24:00</span>
                     <div class="flex gap-2">
                         <button class="map-btn flex-1" onclick="openGoogleMap('Yakiniku+KAZUCHAN+Naha+Kokusai+Street')">
                             餐廳
@@ -561,11 +610,18 @@
                     <h3 class="text-base font-bold mt-1">最後購物 & 午餐</h3>
                     <div class="mt-3 space-y-2">
                          <button class="w-full text-left bg-white p-2 rounded border border-gray-100 text-sm flex justify-between" onclick="openGoogleMap('San-A+Naha+Main+Place')">
-                            <span>🛍 San-A Main Place</span>
+                            <div>
+                                <span>🛍 San-A Main Place</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 23:00</span>
+                            </div>
                             <i class="fas fa-location-arrow text-gray-400"></i>
                         </button>
                         <button class="w-full text-left bg-white p-2 rounded border border-gray-100 text-sm flex justify-between" onclick="openGoogleMap('黒船+鰻+Apple+Town')">
-                            <span>🍱 黑船鰻魚飯 (外帶)</span>
+                            <div>
+                                <span>🍱 黑船鰻魚飯 (外帶)</span>
+                                <!-- 更新：移除預估字樣 -->
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>11:00 - 21:00</span>
+                            </div>
                             <i class="fas fa-utensils text-gray-400"></i>
                         </button>
                     </div>
@@ -580,6 +636,7 @@
                 <div class="trip-card p-4 flex-1 bg-red-50 border border-red-100">
                     <span class="tag tag-alert">DEADLINE</span>
                     <h3 class="text-base font-bold mt-1">OTS 臨空豐崎 還車</h3>
+                    <span class="biz-hours mb-2 text-red-800"><i class="far fa-clock mr-1"></i>08:00 - 19:00</span>
                     <button class="map-btn !bg-red-600 w-full mt-2" onclick="openGoogleMap('OTS+Rinkai+Toyosaki+Rental+Car')">
                         <i class="fas fa-car mr-1"></i> 導航還車
                     </button>
@@ -638,7 +695,3 @@
     </script>
 </body>
 </html>
-
-
-
-
