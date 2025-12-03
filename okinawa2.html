@@ -80,6 +80,7 @@
             gap: 10px;
             overflow-x: auto;
             padding-bottom: 10px;
+            justify-content: center; /* 置中設定 */
             /* 隱藏捲軸 */
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -100,7 +101,7 @@
             min-width: 70px;
         }
 
-        /* 導航 Tabs - 改為橫向捲動 */
+        /* 導航 Tabs - 調整為兩行顯示 (Flex Wrap) */
         .nav-tabs-container {
             position: sticky;
             top: 0;
@@ -115,18 +116,15 @@
             display: flex;
             gap: 12px;
             padding: 0 16px;
-            overflow-x: auto;
-            white-space: nowrap;
-            /* 隱藏捲軸 */
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
+            /* 移除橫向捲動相關屬性 */
+            flex-wrap: wrap; /* 允許分行 */
+            justify-content: center; /* 置中 */
+            white-space: normal; /* 允許文字換行 */
         }
         
         .nav-btn {
-            flex: 0 0 auto;
+            /* 讓按鈕平均分配寬度，每行兩個 */
+            flex: 1 1 calc(50% - 6px); /* 50% 寬度減去一半的 gap */
             padding: 8px 20px;
             border: 1px solid var(--text-main);
             border-radius: 20px;
@@ -135,6 +133,7 @@
             font-size: 0.95rem;
             color: var(--text-main);
             transition: all 0.3s ease;
+            text-align: center; /* 文字置中 */
         }
         
         .nav-btn.active {
@@ -261,7 +260,7 @@
         </div>
     </section>
 
-    <!-- 導航 Tabs (Sticky & Scrollable) -->
+    <!-- 導航 Tabs (兩行顯示，全螢幕可見) -->
     <nav class="nav-tabs-container">
         <div class="max-w-3xl mx-auto nav-tabs" id="navTabs">
             <button class="nav-btn active" onclick="switchDay('day1', this)">Day 1 抵達</button>
@@ -269,8 +268,7 @@
             <button class="nav-btn" onclick="switchDay('day3', this)">Day 3 放鬆</button>
             <button class="nav-btn" onclick="switchDay('day4', this)">Day 4 返程</button>
         </div>
-        <!-- 陰影遮罩提示有更多內容 (Optional) -->
-        <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#f4f1ea] to-transparent pointer-events-none md:hidden"></div>
+        <!-- 移除捲動提示陰影 -->
     </nav>
 
     <main class="max-w-3xl mx-auto px-4 pb-24 pt-4">
@@ -617,7 +615,7 @@
             document.getElementById(dayId).classList.add('active');
             btnElement.classList.add('active');
 
-            // 讓選中的按鈕滾動到可視範圍中間
+            // 讓選中的按鈕滾動到可視範圍中間 (此行保留，但因為改為兩行顯示，效果會比較不顯著)
             btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             
             // 重置動畫
