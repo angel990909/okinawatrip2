@@ -128,14 +128,13 @@
         }
         
         .nav-btn {
-            /* 修改：設定為每行兩個 (50% 寬度扣除一半的間距) */
             flex: 1 1 calc(50% - 0.375rem); 
             min-width: 4rem;
             padding: 0.5rem 0.5rem;
             border: 1px solid var(--text-main);
             border-radius: 9999px;
             background: transparent;
-            font-size: 0.9rem; /* 稍微放大字體 */
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--text-main);
             transition: all 0.3s ease;
@@ -238,6 +237,7 @@
             border-bottom: 1px dashed #e2e8f0;
             cursor: pointer;
             transition: all 0.2s;
+            overflow: hidden; /* 防止內容溢出 */
         }
         .todo-item:last-child {
             border-bottom: none;
@@ -251,9 +251,11 @@
             color: #cbd5e1;
             font-size: 1rem;
             transition: color 0.2s;
+            flex-shrink: 0; /* 防止勾選框被壓縮 */
         }
         .todo-content {
             flex: 1;
+            min-width: 0; /* 讓 truncate 生效 */
         }
         /* 完成狀態 */
         .todo-item.completed .todo-check {
@@ -305,31 +307,34 @@
         <div class="weather-scroll pb-2">
             <!-- Day 1: 12/05 Fri -->
             <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
-                <span class="text-[0.6rem] text-gray-500">Fri</span>
+                <span class="text-[0.5rem] text-gray-500">Fri</span>
                 <span class="text-[1.5rem] my-1 text-orange-300">⛅</span>
-                <span class="text-[0.6rem] font-bold text-red-500">20°<span class="text-blue-400 font-normal"> / 16°</span></span>
-                <span class="text-[0.6rem] text-blue-300">20%</span>
+                <span class="text-[0.55rem] font-bold text-red-500">20°<span class="text-blue-400 font-normal"> / 16°</span></span>
+                <span class="text-[0.5rem] text-blue-300">20%</span>
             </div>
+            
             <!-- Day 2: 12/06 Sat -->
             <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
-                <span class="text-[0.6rem] text-gray-500">Sat</span>
+                <span class="text-[0.5rem] text-gray-500">Sat</span>
                 <span class="text-[1.5rem] my-1 text-orange-400">☀</span>
-                <span class="text-[0.6rem] font-bold text-red-500">22°<span class="text-blue-400 font-normal"> / 15°</span></span>
-                <span class="text-[0.6rem] text-blue-300">10%</span>
+                <span class="text-[0.55rem] font-bold text-red-500">22°<span class="text-blue-400 font-normal"> / 15°</span></span>
+                <span class="text-[0.5rem] text-blue-300">10%</span>
             </div>
+            
             <!-- Day 3: 12/07 Sun -->
-            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" style="border-color: #60a5fa;" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
-                <span class="text-[0.6rem] text-gray-500">Sun</span>
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
+                <span class="text-[0.5rem] text-gray-500">Sun</span>
                 <span class="text-[1.5rem] my-1 text-orange-300">🌤</span>
-                <span class="text-[0.6rem] font-bold text-red-500">23°<span class="text-blue-400 font-normal"> / 18°</span></span>
-                <span class="text-[0.6rem] text-gray-400">0%</span>
+                <span class="text-[0.55rem] font-bold text-red-500">23°<span class="text-blue-400 font-normal"> / 18°</span></span>
+                <span class="text-[0.5rem] text-gray-400">0%</span>
             </div>
+            
             <!-- Day 4: 12/08 Mon -->
             <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
-                <span class="text-[0.6rem] text-gray-500">Mon</span>
+                <span class="text-[0.5rem] text-gray-500">Mon</span>
                 <span class="text-[1.5rem] my-1 text-orange-300">🌤</span>
-                <span class="text-[0.6rem] font-bold text-red-500">24°<span class="text-blue-400 font-normal"> / 19°</span></span>
-                <span class="text-[0.6rem] text-blue-400">30%</span>
+                <span class="text-[0.55rem] font-bold text-red-500">24°<span class="text-blue-400 font-normal"> / 19°</span></span>
+                <span class="text-[0.5rem] text-blue-400">30%</span>
             </div>
         </div>
     </section>
@@ -341,7 +346,6 @@
             <button class="nav-btn" onclick="switchDay('day2', this)">Day 2 購物</button>
             <button class="nav-btn" onclick="switchDay('day3', this)">Day 3 放鬆</button>
             <button class="nav-btn" onclick="switchDay('day4', this)">Day 4 返程</button>
-            <!-- 新增按鈕 -->
             <button class="nav-btn" onclick="switchDay('shopping', this)">購物清單</button>
             <button class="nav-btn" onclick="switchDay('tickets', this)">票卷整理</button>
         </div>
@@ -720,14 +724,14 @@
                     <div class="todo-item" onclick="toggleTodo(this)">
                         <i class="far fa-square todo-check"></i>
                         <div class="todo-content">
-                            <span class="font-bold block text-sm">降噪耳機 Anker Soundcore Space One Pro</span>
+                            <span class="font-bold block text-xs whitespace-nowrap truncate">降噪耳機 Anker Soundcore Space One Pro</span>
                             <span class="text-xs text-gray-500 block">型號：SPACEONEPRO | ¥26,990</span>
                         </div>
                     </div>
                     <div class="todo-item" onclick="toggleTodo(this)">
                         <i class="far fa-square todo-check"></i>
                         <div class="todo-content">
-                            <span class="font-bold block text-sm">Bose QuietComfort Ultra Headphones (2nd Gen)</span>
+                            <span class="font-bold block text-xs whitespace-nowrap truncate">Bose QuietComfort Ultra Headphones (2nd Gen)</span>
                             <span class="text-xs text-gray-500 block">Driftwood Sand | 型號：QCULTRAHP2ndDWS | ¥59,400</span>
                         </div>
                     </div>
@@ -740,10 +744,10 @@
                     <i class="fas fa-tshirt text-red-500 mr-2"></i> 服飾與鞋類 (Uniqlo/ABC Mart旁)
                 </h3>
                 <div class="space-y-3">
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">男裝：襯衫</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">女裝：外套</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">襪子 / bra top</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">On 鞋子 (ABC Mart旁邊鞋店)</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">男裝：襯衫</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">女裝：外套</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">襪子 / bra top</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">On 鞋子 (ABC Mart旁邊鞋店)</span></div>
                 </div>
             </div>
 
@@ -753,22 +757,23 @@
                     <i class="fas fa-pills text-pink-500 mr-2"></i> 藥妝店
                 </h3>
                 <div class="grid grid-cols-2 gap-2">
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">護手霜</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">大帆立貝</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">溫熱眼罩</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">皇后面膜/眼膜</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">眼藥水</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">小兒液體B群</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">蚊蟲藥(滾珠)</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">表飛鳴</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">一滴消臭</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">保濕口罩</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">脂質維他命C</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">黑生薑燃脂丸</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">酵素</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">富士減糖丸</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">殺菌漱口水</span></div>
-                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">殺菌口含錠</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">護手霜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">大帆立貝</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">溫熱眼罩</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">皇后面膜/眼膜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">眼藥水</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">小兒液體B群</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">蚊蟲藥(滾珠)</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">表飛鳴</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">一滴消臭</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">保濕口罩</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">脂質維他命C</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">黑生薑燃脂丸</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">酵素</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">富士減糖丸</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">殺菌漱口水</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">殺菌口含錠</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">成人漱口水</span></div>
                 </div>
             </div>
 
@@ -778,14 +783,14 @@
                     <i class="fas fa-shopping-basket text-green-500 mr-2"></i> 超市 / 便利店
                 </h3>
                 
-                <!-- 修改：使用 Grid 讓 7-11 與 超市並排 -->
+                <!-- 使用 Grid 讓 7-11 與 超市並排 -->
                 <div class="grid grid-cols-2 gap-4">
                     <!-- 左欄：7-11 -->
                     <div>
                         <p class="text-xs font-bold text-gray-500 mt-1 mb-2 border-b border-gray-200 pb-1">7-11</p>
                         <div class="space-y-2">
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">蘭姆葡萄餅乾</span></div>
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">檸檬飲</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">蘭姆葡萄餅乾</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">檸檬飲</span></div>
                         </div>
                     </div>
                     
@@ -793,12 +798,1026 @@
                     <div>
                         <p class="text-xs font-bold text-gray-500 mt-1 mb-2 border-b border-gray-200 pb-1">超市</p>
                         <div class="space-y-2">
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">辣椒油</span></div>
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">鹽昆布</span></div>
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">野菜薯條</span></div>
-                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-sm">牡蠣醬油</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">辣椒油</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">鹽昆布</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">野菜薯條</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">牡蠣醬油</span></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Muji -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <!-- 使用官方風格 SVG Logo -->
+                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%237F0019'/%3E%3Ctext x='50' y='50' fill='white' font-family='sans-serif' font-weight='bold' font-size='30' text-anchor='middle' dominant-baseline='central'%3EMUJI%3C/text%3E%3C/svg%3E" class="w-6 h-6 mr-2 shadow-sm rounded-sm" alt="MUJI Logo">
+                    Muji 無印良品
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">美容液</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">壓縮面膜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">透明小物袋</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">美容刀</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">衣服</span></div>
+                </div>
+            </div>
+
+            <!-- 3 Coins -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-coins text-yellow-500 mr-2"></i> 3 Coins
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">登機箱用杯架</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">珍珠手機背帶</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">微波盒</span></div>
+                </div>
+            </div>
+
+            <!-- Daiso -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-store text-pink-500 mr-2"></i> Daiso 大創
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">濕髮梳子</span></div>
+                </div>
+            </div>
+
+            <!-- Album Button -->
+            <div class="text-center mt-8 mb-12 fade-in-up">
+                <a href="https://photos.app.goo.gl/fn3Rje2oUL14vYbE7" target="_blank" class="album-btn">
+                    <i class="fas fa-images mr-2"></i> 購物相簿
+                </a>
+            </div>
+        </div>
+
+        <!-- 票卷整理 (新增) -->
+        <div id="tickets" class="day-content timeline-container">
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">票卷整理</h2>
+                <p class="text-xs text-gray-500 mt-1">點擊確認使用狀態</p>
+            </div>
+
+            <!-- Purchased -->
+            <div class="trip-card p-4 mb-6 fade-in-up border-l-4 border-green-400">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i> 已購買
+                </h3>
+                <div class="todo-item" onclick="toggleTodo(this)">
+                    <i class="far fa-square todo-check"></i>
+                    <div class="todo-content">
+                        <span class="font-bold block text-sm">12/05 環亞貴賓室 (C區)</span>
+                        <span class="text-xs text-gray-500 block">數量：3位</span>
+                        <p class="text-xs text-slate-600 mt-1 bg-slate-100 p-2 rounded">
+                            <i class="fas fa-info-circle mr-1"></i>出境後，左轉B1-B9登機門，搭手扶梯至4樓 (國泰貴賓室旁)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Not Purchased -->
+            <div class="trip-card p-4 mb-6 fade-in-up border-l-4 border-orange-400">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-exclamation-circle text-orange-500 mr-2"></i> 未購買 / 現場買
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)">
+                        <i class="far fa-square todo-check"></i>
+                        <div class="todo-content">
+                            <span class="font-bold block text-sm">12/06 沖繩 Fun Pass</span>
+                            <span class="text-xs text-gray-500 block">東南植物園 + DMM 水族館 | 數量：2</span>
+                            <!-- 修改：字體放大 text-[10px] -> text-sm -->
+                            <span class="text-sm text-orange-500 font-bold">購買點：Klook</span>
+                        </div>
+                    </div>
+                    <div class="todo-item" onclick="toggleTodo(this)">
+                        <i class="far fa-square todo-check"></i>
+                        <div class="todo-content">
+                            <span class="font-bold block text-sm">12/07 東南植物園 夜間門票</span>
+                            <span class="text-xs text-gray-500 block">數量：1</span>
+                            <!-- 修改：字體放大 text-[10px] -> text-sm -->
+                            <span class="text-sm text-blue-500 font-bold">購買點：Trip.com</span>
+                        </div>
+                    </div>
+                    <div class="todo-item" onclick="toggleTodo(this)">
+                        <i class="far fa-square todo-check"></i>
+                        <div class="todo-content">
+                            <span class="font-bold block text-sm">12/08 可愛動物餵食</span>
+                            <span class="text-xs text-gray-500 block">DMM 水族館 2F</span>
+                            <!-- 修改：字體放大 text-[10px] -> text-sm -->
+                            <span class="text-sm text-slate-500 font-bold">購買點：現場購買</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-6 bg-[#eae6dc] text-slate-500 text-[10px]">
+        <p>Okinawa Trip 2025</p>
+        <p>Designed for Mobile</p>
+    </footer>
+
+    <script>
+        function openGoogleMap(query) {
+            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+            window.open(mapUrl, '_blank');
+        }
+
+        function switchDay(dayId, btnElement) {
+            const targetContent = document.getElementById(dayId);
+            if (!targetContent) {
+                console.warn(`Target content element with id '${dayId}' not found.`);
+                return;
+            }
+
+            // 隱藏所有內容
+            document.querySelectorAll('.day-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // 移除所有按鈕 active 狀態
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 顯示選中內容 & 激活按鈕
+            targetContent.classList.add('active');
+            
+            if (btnElement && btnElement.classList) {
+                btnElement.classList.add('active');
+                if (btnElement.scrollIntoView) {
+                    btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }
+            
+            // 重置動畫
+            resetAnimations(dayId);
+        }
+
+        // 新增：切換 Todo 狀態
+        function toggleTodo(element) {
+            element.classList.toggle('completed');
+        }
+
+        function resetAnimations(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return; 
+            const items = container.querySelectorAll('.fade-in-up');
+            items.forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; /* trigger reflow */
+                el.style.animation = null; 
+            });
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>沖繩冬日輕旅 | Okinawa Winter Trip</title>
+    
+    <!-- 預載資源 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 引入 Zen Maru Gothic 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 自定義 Vibe 樣式 --- */
+        :root {
+            --bg-color: #f4f1ea; /* 亞麻紙色 */
+            --text-main: #4a4a4a; /* 墨色 */
+            --accent-blue: #0077be; /* 慶良間藍 */
+            --accent-red: #cc4f4f; /* 扶桑花紅 */
+            --accent-green: #556b2f; /* 苦瓜綠 */
+            --paper-texture: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            --main-font: 'Zen Maru Gothic', sans-serif;
+        }
+
+        /* 設定基礎字體大小為 20px，讓整體內容適度放大，適合手機閱讀 */
+        html {
+            font-size: 20px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: var(--paper-texture);
+            color: var(--text-main);
+            font-family: var(--main-font);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1, h2, h3, h4, .serif-font, .nav-btn, .tag, .weather-badge {
+            font-family: var(--main-font) !important;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+        }
+
+        /* 頂部海浪裝飾 */
+        .wave-top {
+            position: relative;
+            height: 220px; 
+            background: linear-gradient(180deg, #dbeafe 0%, rgba(255,255,255,0) 100%);
+            overflow: hidden;
+        }
+        
+        /* 恢復原本的青海波紋樣式 */
+        .seigaiha-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: radial-gradient(circle at 50% 100%, #0077be 15%, transparent 16%), 
+                              radial-gradient(circle at 50% 100%, #0077be 10%, transparent 11%);
+            background-size: 80px 40px;
+            z-index: 10;
+        }
+
+        /* 卡片樣式 */
+        .trip-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 1rem; /* px -> rem */
+            box-shadow: 0 0.125rem 0.625rem rgba(0,0,0,0.03); /* px -> rem */
+            transition: transform 0.2s ease;
+        }
+        
+        .trip-card:active {
+            transform: scale(0.98);
+        }
+
+        /* 天氣小卡 - 網格佈局 */
+        .weather-scroll {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.4rem;
+            width: 100%;
+        }
+
+        .weather-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem 0.2rem; 
+            background-color: white; 
+            border-radius: 0.75rem; 
+            border-top: 0.2rem solid var(--accent-blue); 
+            min-width: 0; 
+            width: 100%;
+        }
+
+        /* 導航 Tabs */
+        .nav-tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(244, 241, 234, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.05);
+            padding: 0.625rem 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            white-space: normal;
+        }
+        
+        .nav-btn {
+            flex: 1 1 calc(50% - 0.375rem); 
+            min-width: 4rem;
+            padding: 0.5rem 0.5rem;
+            border: 1px solid var(--text-main);
+            border-radius: 9999px;
+            background: transparent;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .nav-btn.active {
+            background: var(--text-main);
+            color: var(--bg-color);
+            box-shadow: 0 0.25rem 0.625rem rgba(74, 74, 74, 0.3);
+        }
+
+        /* 導航按鈕樣式 */
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.375rem 0.875rem; 
+            margin-top: 0.5rem; 
+            background-color: var(--accent-blue);
+            color: white;
+            border-radius: 1.25rem; 
+            font-size: 0.8rem;
+            font-weight: 500;
+            touch-action: manipulation;
+        }
+        
+        /* 時間軸線條 */
+        .timeline-container {
+            position: relative;
+            padding-left: 0.625rem; 
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 1.5rem; 
+            top: 0.625rem; 
+            bottom: 0;
+            width: 0.125rem; 
+            background: repeating-linear-gradient(to bottom, #cbd5e1 0, #cbd5e1 0.25rem, transparent 0.25rem, transparent 0.5rem); 
+            z-index: -1;
+        }
+
+        /* 左側時間欄位寬度調整 */
+        .time-col {
+            min-width: 3.2rem; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0.25rem; 
+        }
+
+        /* 標籤 Tag */
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.125rem 0.5rem; 
+            border-radius: 0.375rem; 
+            margin-right: 0.25rem; 
+            margin-bottom: 0.25rem; 
+            letter-spacing: 0.05em;
+        }
+        .tag-food { background-color: #fff0f0; color: var(--accent-red); border: 1px solid #ffcccc; }
+        .tag-shop { background-color: #f0f8ff; color: var(--accent-blue); border: 1px solid #cceeff; }
+        .tag-spot { background-color: #f5fcf0; color: var(--accent-green); border: 1px solid #ddeecc; }
+        .tag-alert { background-color: #fffcf0; color: #d4a017; border: 1px solid #ffeeba; }
+
+        /* 動畫 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(1.25rem); 
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .day-content { display: none; }
+        .day-content.active { display: block; }
+        
+        /* 營業時間文字樣式 */
+        .biz-hours {
+            font-size: 0.7rem;
+            color: #64748b; /* slate-500 */
+            display: block;
+            margin-top: 0.125rem; 
+            font-family: 'Zen Maru Gothic', sans-serif;
+        }
+
+        /* Todo List 樣式 */
+        .todo-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.5rem;
+            border-bottom: 1px dashed #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+            overflow: hidden; /* 防止內容溢出 */
+        }
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+        .todo-item:hover {
+            background-color: #f8fafc;
+        }
+        .todo-check {
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+            color: #cbd5e1;
+            font-size: 1rem;
+            transition: color 0.2s;
+            flex-shrink: 0; /* 防止勾選框被壓縮 */
+        }
+        .todo-content {
+            flex: 1;
+            min-width: 0; /* 讓 truncate 生效 */
+        }
+        /* 完成狀態 */
+        .todo-item.completed .todo-check {
+            color: var(--accent-green);
+        }
+        .todo-item.completed .todo-check::before {
+            content: "\f14a"; /* fa-check-square */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        }
+        .todo-item.completed .todo-content {
+            text-decoration: line-through;
+            opacity: 0.5;
+            color: #94a3b8;
+        }
+
+        /* 文青相簿按鈕 */
+        .album-btn {
+            display: inline-block;
+            background-color: #8d8070; /* 奶茶色/大地色系 */
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.05em;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        .album-btn:active {
+            transform: scale(0.95);
+            background-color: #7a6e60;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="wave-top pt-8 px-4 text-center">
+        <!-- 恢復原本的青海波背景 -->
+        <div class="seigaiha-pattern"></div>
+        <div class="relative z-30 pt-4">
+            <h1 class="text-3xl font-bold tracking-widest text-slate-700 mb-1">沖繩冬日輕旅</h1>
+            <p class="serif-font text-sm text-slate-500 tracking-wider">2025.12.05 - 12.08</p>
+        </div>
+    </header>
+
+    <!-- 天氣橫向捲動區 -->
+    <section class="max-w-3xl mx-auto px-4 mt-8 relative z-20 mb-10">
+        <div class="weather-scroll pb-2">
+            <!-- Day 1: 12/05 Fri -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
+                <span class="text-[0.5rem] text-gray-500">Fri</span>
+                <span class="text-[1.5rem] my-1 text-orange-300">⛅</span>
+                <span class="text-[0.55rem] font-bold text-red-500">20°<span class="text-blue-400 font-normal"> / 16°</span></span>
+                <span class="text-[0.5rem] text-blue-300">20%</span>
+            </div>
+            
+            <!-- Day 2: 12/06 Sat -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
+                <span class="text-[0.5rem] text-gray-500">Sat</span>
+                <span class="text-[1.5rem] my-1 text-orange-400">☀</span>
+                <span class="text-[0.55rem] font-bold text-red-500">22°<span class="text-blue-400 font-normal"> / 15°</span></span>
+                <span class="text-[0.5rem] text-blue-300">10%</span>
+            </div>
+            
+            <!-- Day 3: 12/07 Sun -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
+                <span class="text-[0.5rem] text-gray-500">Sun</span>
+                <span class="text-[1.5rem] my-1 text-orange-300">🌤</span>
+                <span class="text-[0.55rem] font-bold text-red-500">23°<span class="text-blue-400 font-normal"> / 18°</span></span>
+                <span class="text-[0.5rem] text-gray-400">0%</span>
+            </div>
+            
+            <!-- Day 4: 12/08 Mon -->
+            <div class="weather-badge shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="window.open('https://tenki.jp/forecast/10/50/9110/47211/', '_blank')">
+                <span class="text-[0.5rem] text-gray-500">Mon</span>
+                <span class="text-[1.5rem] my-1 text-orange-300">🌤</span>
+                <span class="text-[0.55rem] font-bold text-red-500">24°<span class="text-blue-400 font-normal"> / 19°</span></span>
+                <span class="text-[0.5rem] text-blue-400">30%</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 導航 Tabs -->
+    <nav class="nav-tabs-container">
+        <div class="max-w-3xl mx-auto nav-tabs" id="navTabs">
+            <button class="nav-btn active" onclick="switchDay('day1', this)">Day 1 抵達</button>
+            <button class="nav-btn" onclick="switchDay('day2', this)">Day 2 購物</button>
+            <button class="nav-btn" onclick="switchDay('day3', this)">Day 3 放鬆</button>
+            <button class="nav-btn" onclick="switchDay('day4', this)">Day 4 返程</button>
+            <button class="nav-btn" onclick="switchDay('shopping', this)">購物清單</button>
+            <button class="nav-btn" onclick="switchDay('tickets', this)">票卷整理</button>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 pb-24 pt-4">
+        
+        <!-- Day 1 Content -->
+        <div id="day1" class="day-content active timeline-container">
+            <div class="timeline-line"></div>
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">初日：潮風與異國夜色</h2>
+                <p class="text-xs text-gray-500 mt-1">那霸抵達 · 租車 · 美國村點燈</p>
+            </div>
+            <!-- 送機 -->
+            <div class="flex gap-3 mb-6 fade-in-up">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">09:30</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 bg-slate-50 border border-slate-100">
+                    <span class="tag tag-shop">接送</span>
+                    <h3 class="text-base font-bold mt-1 text-slate-800">
+                        北投出發 <i class="fas fa-car-side text-slate-500 ml-1 text-sm"></i>
+                    </h3>
+                    <p class="text-xs text-gray-600 mt-1">預約送機 ➔ 桃園機場第一航廈</p>
+                </div>
+            </div>
+            <!-- 航班 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.1s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">13:25</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 relative overflow-hidden">
+                    <div class="absolute -right-2 -top-2 text-6xl opacity-10 rotate-12">✈️</div>
+                    <div><span class="tag tag-spot">飛行</span></div>
+                    <h3 class="text-base font-bold mt-1 text-slate-800">台北 TPE ➔ 那霸 OKA</h3>
+                    <p class="text-xs text-gray-600 mt-1">航班 FD230 | 13:25 - 15:55</p>
+                    <div class="mt-3 p-3 bg-blue-50/80 rounded-lg border border-blue-100 text-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <strong class="text-blue-900 block mb-1">🚗 OTS 租車</strong>
+                                <span class="text-xs text-gray-500 block">臨空豐崎營業所</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>08:00 - 19:00</span>
+                            </div>
+                            <button class="map-btn shadow-sm" onclick="openGoogleMap('OTS+Rinkai+Toyosaki')">
+                                <i class="fas fa-location-arrow mr-1"></i> 導航
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Check In -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">Check In</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-spot">住宿</span>
+                    <h3 class="text-base font-bold mt-1 text-slate-800">Rakuten STAY Naha</h3>
+                    <span class="biz-hours"><i class="far fa-clock mr-1"></i>Check-in: 15:00 / Out: 10:00</span>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <button class="map-btn" onclick="openGoogleMap('Rakuten+STAY+Naha+Yachimundori')">導航飯店</button>
+                        <button class="map-btn !bg-slate-500" onclick="openGoogleMap('Noren+Plaza+Okyakusama+Parking+Lot')"><i class="fas fa-parking mr-1"></i> 停車場</button>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2"><i class="fas fa-info-circle mr-1"></i> 停車請停 Noren Plaza</p>
+                </div>
+            </div>
+            <!-- 晚餐 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.3s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">Night</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-food">晚餐</span>
+                    <h3 class="text-base font-bold mt-1 text-slate-800">那霸市區漫步</h3>
+                    <ul class="text-sm text-slate-600 mt-3 space-y-3 list-none pl-0">
+                        <li class="flex justify-between items-center pb-2 border-b border-gray-100">
+                            <div class="flex flex-col">
+                                <span>沖縄とんかつ食堂</span>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>17:00 - 23:00</span>
+                            </div>
+                            <button class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600" onclick="openGoogleMap('沖縄とんかつ食堂しまぶた屋+小やじ')"><i class="fas fa-map-pin"></i> GO</button>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <div class="flex items-center flex-wrap">
+                                    <span>Cocokara Fine 藥妝</span>
+                                    <span class="text-[0.6rem] text-pink-500 bg-pink-50 border border-pink-200 rounded-full px-2 py-0.5 ml-2 whitespace-nowrap"><i class="fas fa-hand-sparkles mr-1"></i>護手霜</span>
+                                </div>
+                                <span class="biz-hours"><i class="far fa-clock mr-1"></i>10:00 - 21:00</span>
+                            </div>
+                            <button class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600" onclick="openGoogleMap('Cocokara+Fine+Heiwa+Dori')"><i class="fas fa-map-pin"></i> GO</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 深夜 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.3s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">Late</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 border-l-4 border-yellow-400 bg-yellow-50/50">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800">美國村 & 唐吉軻德</h3>
+                            <p class="text-xs text-slate-500 mt-1">深夜行程</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 space-y-3">
+                        <button class="w-full text-left bg-white p-2 rounded shadow-sm border border-gray-100 flex justify-between items-center" onclick="openGoogleMap('美浜アメリカンビレッジ シーサイドP')">
+                            <div><span class="text-sm">🎄 美國村聖誕燈飾</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>點燈: 17:00 - 24:00</span></div>
+                            <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+                        </button>
+                        <button class="w-full text-left bg-white p-2 rounded shadow-sm border border-gray-100 flex justify-between items-center" onclick="openGoogleMap('MEGA+Don+Quijote+Ginowan')">
+                             <div><span class="text-sm">🐧 MEGA 唐吉軻德</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 05:00 (翌日)</span></div>
+                            <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2 Content -->
+        <div id="day2" class="day-content timeline-container">
+            <div class="timeline-line"></div>
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">二日：城市的綠與光</h2>
+                <p class="text-xs text-gray-500 mt-1">海景購物 · 戶外選物 · 植物園燈節</p>
+            </div>
+            <!-- 早上行程1 -->
+            <div class="flex gap-3 mb-6 fade-in-up">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">09:30</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-shop">露營</span>
+                    <h3 class="text-base font-bold mt-1 flex items-center">
+                        戶外用品 燈人-tomoshibito
+                        <i class="fas fa-lightbulb text-yellow-400 ml-2 text-lg drop-shadow-sm"></i>
+                    </h3>
+                    <p class="text-xs text-gray-500 mb-1">那霸市曙 | 質感露營選物</p>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>09:30 - 18:00</span>
+                    <button class="map-btn w-full" onclick="openGoogleMap('アウトドアショップ 燈人')"><i class="fas fa-location-arrow mr-1"></i> 導航出發</button>
+                </div>
+            </div>
+            <!-- 購物 -->
+            <div class="flex gap-3 mb-6 fade-in-up">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">AM</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-shop">購物</span>
+                    <h3 class="text-base font-bold mt-1">PARCO CITY</h3>
+                    <p class="text-xs text-gray-500 mb-1">浦添西海岸 | 眼前即是海景</p>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>10:00 - 22:00</span>
+                    <button class="map-btn w-full" onclick="openGoogleMap('San-A+Urasoe+Nishikaigan+PARCO+CITY')"><i class="fas fa-location-arrow mr-1"></i> 導航出發</button>
+                </div>
+            </div>
+            <!-- 選物 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.1s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">PM</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-shop">選物</span>
+                    <h3 class="text-base font-bold mt-1">NEOS & Xebio</h3>
+                    <p class="text-xs text-gray-500">宜野灣戶外用品天堂</p>
+                    <div class="flex flex-col gap-2 mt-3">
+                        <button class="map-btn !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('NEOS+Ginowan')">
+                            <span class="flex items-center justify-center"><i class="fas fa-shopping-cart mr-1"></i> 導航 NEOS</span>
+                            <span class="text-[0.6rem] opacity-80 font-normal mt-0.5">11:00 - 20:00</span>
+                        </button>
+                        <button class="map-btn !bg-amber-600 !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('Komeda\'s+Coffee+Ginowan+Uchitomari')">
+                            <span class="flex items-center justify-center"><i class="fas fa-mug-hot mr-1"></i> 客美多</span>
+                            <span class="text-[0.6rem] opacity-80 font-normal mt-0.5">07:00 - 23:00</span>
+                        </button>
+                        <button class="map-btn !bg-slate-600 !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('Super+Sports+Xebio+Ginowan')">
+                            <span class="flex items-center justify-center"><i class="fas fa-shopping-bag mr-1"></i> 導航 Xebio</span>
+                            <span class="text-[0.6rem] opacity-80 font-normal mt-0.5">10:00 - 21:00</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 植物園 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">17:00</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 bg-gradient-to-b from-indigo-50 to-white border border-indigo-100">
+                    <span class="tag tag-spot">重點行程</span>
+                    <h3 class="text-base font-bold mt-1 text-indigo-900">東南植物園 南國彩燈節</h3>
+                    <span class="biz-hours mb-2 text-indigo-800"><i class="far fa-clock mr-1"></i>17:00 - 22:00 (點燈)</span>
+                    <div class="mt-2 mb-3">
+                        <button class="map-btn !bg-indigo-600 w-full shadow-md" onclick="openGoogleMap('Southeast+Botanical+Gardens')"><i class="fas fa-star mr-1"></i> 導航入口</button>
+                    </div>
+                    <div class="pt-2 border-t border-indigo-100 mt-2">
+                        <button class="map-btn !bg-amber-600 !text-xs w-full justify-center flex-col items-center py-2 h-auto" onclick="openGoogleMap('丸源ラーメン 浦添店')">
+                            <span class="flex items-center justify-center"><i class="fas fa-utensils mr-1"></i> 晚餐：丸源拉麵 (浦添店)</span>
+                            <span class="text-[0.6rem] opacity-80 font-normal mt-0.5">11:00 - 24:00</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3 Content -->
+        <div id="day3" class="day-content timeline-container">
+            <div class="timeline-line"></div>
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">三日：瀨長島的透明藍</h2>
+                <p class="text-xs text-gray-500 mt-1">水族館 · 溫泉 · 預約制燒肉</p>
+            </div>
+            <div class="bg-amber-100 rounded-lg p-3 mb-6 flex items-start gap-3 fade-in-up mx-2">
+                <i class="fas fa-bell text-amber-600 mt-1"></i>
+                <p class="text-xs text-amber-900 leading-relaxed"><strong>今日需早起！</strong><br>建議 08:20 飯店出發，避開上班車潮。</p>
+            </div>
+            <!-- 水族館 -->
+            <div class="flex gap-3 mb-6 fade-in-up">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-red-500">09:00</span>
+                    <div class="w-3 h-3 rounded-full bg-red-400 mt-1 ring-4 ring-[#f4f1ea] animate-pulse"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-spot">必訪</span>
+                    <h3 class="text-base font-bold mt-1">DMM Kariyushi 水族館</h3>
+                    <span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 20:00</span>
+                    <button class="map-btn mt-2" onclick="openGoogleMap('DMM+Kariyushi+Aquarium')"><i class="fas fa-fish mr-1"></i> 開始導航</button>
+                    <!-- 餵食時間 -->
+                    <div class="mt-4 bg-[#fff8f0] rounded-xl p-3 border border-orange-100 shadow-sm">
+                        <h4 class="font-bold text-sm text-[#8B4513] mb-2 flex items-center"><span class="text-xl mr-2">🦦</span> 可愛動物餵食體驗</h4>
+                        <ul class="text-xs text-gray-600 space-y-2 list-none pl-1">
+                            <li class="flex items-center border-b border-orange-50 pb-1 last:border-0 last:pb-0"><span class="font-bold text-orange-400 w-12"><i class="far fa-clock mr-1"></i>10:00</span><span class="font-medium text-slate-700">貓頭鷹餵食</span></li>
+                            <li class="flex items-center border-b border-orange-50 pb-1 last:border-0 last:pb-0"><span class="font-bold text-orange-400 w-12"><i class="far fa-clock mr-1"></i>10:30</span><span class="font-medium text-slate-700">企鵝餵食</span></li>
+                            <li class="flex items-center border-b border-orange-50 pb-1 last:border-0 last:pb-0"><span class="font-bold text-orange-400 w-12"><i class="far fa-clock mr-1"></i>11:00</span><span class="font-medium text-slate-700">樹懶餵食</span></li>
+                            <li class="flex items-center"><span class="font-bold text-orange-400 w-12"><i class="far fa-clock mr-1"></i>11:30</span><span class="font-medium text-slate-700">水獺餵食</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 瀨長島 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.1s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">Noon</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <span class="tag tag-spot">放鬆</span>
+                    <h3 class="text-base font-bold mt-1">瀨長島 Umikaji Terrace</h3>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>10:00 - 21:00</span>
+                    <button class="map-btn mb-3" onclick="openGoogleMap('Umikaji+Terrace')"><i class="fas fa-location-arrow mr-1"></i> 導航主區域</button>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100">
+                            <div><span class="font-medium">🥞 幸福鬆餅</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>10:00 - 20:00</span></div>
+                            <button class="text-xs bg-orange-100 text-orange-600 px-3 py-1.5 rounded-full font-bold shadow-sm" onclick="openGoogleMap('Shiawase+no+Pancake+Umikaji+Terrace')">Go</button>
+                        </div>
+                        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-100">
+                            <div><span class="font-medium">🥗 Poke Boo 夏威夷飯</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>11:00 - 21:00</span></div>
+                            <button class="text-xs bg-green-100 text-green-600 px-3 py-1.5 rounded-full font-bold shadow-sm" onclick="openGoogleMap('Poke+Boo+Umikaji+Terrace')">Go</button>
+                        </div>
+                        <div class="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-100">
+                            <div class="flex flex-col"><span class="font-medium text-blue-900">♨️ 龍神之湯</span><span class="biz-hours text-blue-800"><i class="far fa-clock mr-1"></i>06:00 - 24:00</span><span class="font-medium text-[#8B4513] mt-1"><i class="fas fa-ribbon mr-1"></i>記得帶髮夾!</span></div>
+                            <button class="text-xs bg-blue-400/80 text-white px-3 py-1.5 rounded-full font-bold shadow-sm backdrop-blur-[2px]" onclick="openGoogleMap('Ryukyu+Onsen+Senagajima+Hotel')">Go</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 晚餐 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-700">20:30</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-700 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 border-t-4 border-slate-700">
+                    <span class="tag tag-food">預約制</span>
+                    <h3 class="text-base font-bold mt-1">燒肉 KAZUCHAN</h3>
+                    <p class="text-xs text-gray-500 mb-1">那霸國際通店</p>
+                    <span class="biz-hours mb-2"><i class="far fa-clock mr-1"></i>16:00 - 24:00</span>
+                    <div class="flex gap-2">
+                        <button class="map-btn flex-1" onclick="openGoogleMap('Yakiniku+KAZUCHAN+Naha+Kokusai+Street')">餐廳</button>
+                        <button class="map-btn flex-1 !bg-gray-500" onclick="openGoogleMap('Times+Matsuo+1-chome+No.+2+Parking')"><i class="fas fa-parking mr-1"></i> 停車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 4 Content -->
+        <div id="day4" class="day-content timeline-container">
+            <div class="timeline-line"></div>
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">最終日：再見沖繩</h2>
+                <p class="text-xs text-gray-500 mt-1">最後採買 · 鰻魚飯 · 趕飛機</p>
+            </div>
+            <div class="bg-red-50 border border-red-200 rounded-lg p-3 mb-6 fade-in-up mx-2">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2"><i class="fas fa-plane-departure text-red-500"></i><div><strong class="text-sm text-red-800 block">那霸 OKA ➔ 台北 TPE</strong><span class="text-xs text-red-600">FD231 | 16:55 - 17:35</span></div></div>
+                </div>
+                <div class="border-t border-red-200 pt-2 mt-1"><p class="text-xs text-red-700 leading-normal font-bold">⚠ 15:55 關櫃。請務必於 13:30 還車，15:00 前抵達機場。</p></div>
+            </div>
+            <div class="flex gap-3 mb-6 fade-in-up">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">AM</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1">
+                    <h3 class="text-base font-bold mt-1">最後購物 & 午餐</h3>
+                    <div class="mt-3 space-y-2">
+                         <button class="w-full text-left bg-white p-2 rounded border border-gray-100 text-sm flex justify-between" onclick="openGoogleMap('San-A+Naha+Main+Place')">
+                            <div><span>🛍 San-A Main Place</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>09:00 - 23:00</span></div>
+                            <i class="fas fa-location-arrow text-gray-400"></i>
+                        </button>
+                        <button class="w-full text-left bg-white p-2 rounded border border-gray-100 text-sm flex justify-between" onclick="openGoogleMap('黒船+鰻+Apple+Town')">
+                            <div><span>🍱 黑船鰻魚飯 (外帶)</span><span class="biz-hours"><i class="far fa-clock mr-1"></i>11:00 - 21:00</span></div>
+                            <i class="fas fa-utensils text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.1s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-red-600">13:30</span>
+                    <div class="w-3 h-3 rounded-full bg-red-500 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 bg-red-50 border border-red-100">
+                    <span class="tag tag-alert">DEADLINE</span>
+                    <h3 class="text-base font-bold mt-1">OTS 臨空豐崎 還車</h3>
+                    <span class="biz-hours mb-2 text-red-800"><i class="far fa-clock mr-1"></i>08:00 - 19:00</span>
+                    <button class="map-btn !bg-red-600 w-full mt-2" onclick="openGoogleMap('OTS+Rinkai+Toyosaki+Rental+Car')"><i class="fas fa-car mr-1"></i> 導航還車</button>
+                    <p class="text-[10px] text-gray-500 mt-2 text-center">週一中午易塞車，請預留時間</p>
+                </div>
+            </div>
+            <!-- 第四天飛行行程 -->
+            <div class="flex gap-3 mb-6 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="time-col">
+                    <span class="text-xs font-bold text-slate-500">16:55</span>
+                    <div class="w-3 h-3 rounded-full bg-slate-400 mt-1 ring-4 ring-[#f4f1ea]"></div>
+                </div>
+                <div class="trip-card p-4 flex-1 relative overflow-hidden">
+                    <div class="absolute -right-2 -top-2 text-6xl opacity-10 rotate-12">✈️</div>
+                    <div><span class="tag tag-spot">飛行</span></div>
+                    <h3 class="text-base font-bold mt-1 text-slate-800">那霸 OKA ➔ 台北 TPE</h3>
+                    <p class="text-xs text-gray-600 mt-1">航班 FD231 | 16:55 - 17:35</p>
+                    <div class="mt-3 p-3 bg-blue-50/80 rounded-lg border border-blue-100 text-sm">
+                        <div class="flex justify-between items-start">
+                            <div><strong class="text-blue-900 block mb-1">🏠 抵達台北</strong><span class="text-xs text-gray-500 block">桃園機場第一航廈</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10 opacity-60">
+                <p class="serif-font text-sm">また、会いましょう。</p>
+            </div>
+        </div>
+
+        <!-- 購物清單 (新增) -->
+        <div id="shopping" class="day-content timeline-container">
+            <div class="text-center mb-6 fade-in-up">
+                <h2 class="serif-font text-xl text-slate-700 font-bold">購物清單</h2>
+                <p class="text-xs text-gray-500 mt-1">點擊項目可標記完成</p>
+            </div>
+
+            <!-- Bic Camera -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-camera text-blue-500 mr-2"></i> Bic Camera
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)">
+                        <i class="far fa-square todo-check"></i>
+                        <div class="todo-content">
+                            <span class="font-bold block text-xs whitespace-nowrap truncate">降噪耳機 Anker Soundcore Space One Pro</span>
+                            <span class="text-xs text-gray-500 block">型號：SPACEONEPRO | ¥26,990</span>
+                        </div>
+                    </div>
+                    <div class="todo-item" onclick="toggleTodo(this)">
+                        <i class="far fa-square todo-check"></i>
+                        <div class="todo-content">
+                            <span class="font-bold block text-xs whitespace-nowrap truncate">Bose QuietComfort Ultra Headphones (2nd Gen)</span>
+                            <span class="text-xs text-gray-500 block">Driftwood Sand | 型號：QCULTRAHP2ndDWS | ¥59,400</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uniqlo & Shoes -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-tshirt text-red-500 mr-2"></i> 服飾與鞋類 (Uniqlo/ABC Mart旁)
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">男裝：襯衫</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">女裝：外套</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">襪子 / bra top</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">On 鞋子 (ABC Mart旁邊鞋店)</span></div>
+                </div>
+            </div>
+
+            <!-- Drugstore -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-pills text-pink-500 mr-2"></i> 藥妝店
+                </h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">護手霜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">大帆立貝</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">溫熱眼罩</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">皇后面膜/眼膜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">眼藥水</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">小兒液體B群</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">蚊蟲藥(滾珠)</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">表飛鳴</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">一滴消臭</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">保濕口罩</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">脂質維他命C</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">黑生薑燃脂丸</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">酵素</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">富士減糖丸</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">殺菌漱口水</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">殺菌口含錠</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">成人漱口水</span></div>
+                </div>
+            </div>
+
+            <!-- Supermarket -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-shopping-basket text-green-500 mr-2"></i> 超市 / 便利店
+                </h3>
+                
+                <!-- 使用 Grid 讓 7-11 與 超市並排 -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- 左欄：7-11 -->
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 mt-1 mb-2 border-b border-gray-200 pb-1">7-11</p>
+                        <div class="space-y-2">
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">蘭姆葡萄餅乾</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">檸檬飲</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右欄：超市 -->
+                    <div>
+                        <p class="text-xs font-bold text-gray-500 mt-1 mb-2 border-b border-gray-200 pb-1">超市</p>
+                        <div class="space-y-2">
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">辣椒油</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">鹽昆布</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">野菜薯條</span></div>
+                            <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">牡蠣醬油</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Muji -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <!-- 使用官方風格 SVG Logo -->
+                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%237F0019'/%3E%3Ctext x='50' y='50' fill='white' font-family='sans-serif' font-weight='bold' font-size='30' text-anchor='middle' dominant-baseline='central'%3EMUJI%3C/text%3E%3C/svg%3E" class="w-6 h-6 mr-2 shadow-sm rounded-sm" alt="MUJI Logo">
+                    Muji 無印良品
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">美容液</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">壓縮面膜</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">透明小物袋</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">美容刀</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">衣服</span></div>
+                </div>
+            </div>
+
+            <!-- 3 Coins -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-coins text-yellow-500 mr-2"></i> 3 Coins
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">登機箱用杯架</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">珍珠手機背帶</span></div>
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">微波盒</span></div>
+                </div>
+            </div>
+
+            <!-- Daiso -->
+            <div class="trip-card p-4 mb-4 fade-in-up">
+                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center">
+                    <i class="fas fa-store text-pink-500 mr-2"></i> Daiso 大創
+                </h3>
+                <div class="space-y-3">
+                    <div class="todo-item" onclick="toggleTodo(this)"><i class="far fa-square todo-check"></i><span class="todo-content text-xs whitespace-nowrap truncate">濕髮梳子</span></div>
                 </div>
             </div>
 
