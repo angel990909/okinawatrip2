@@ -1,1 +1,1 @@
-# okinawatrip2
+# okinawatrip
